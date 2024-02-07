@@ -3,15 +3,15 @@ import { put, takeLatest, takeEvery } from 'redux-saga/effects';
 
 function * fetchLeaderboardGame(action) {
     try{
-        yield axios.get(`/api/leaderboard/${action.payload}`)
+        const gamelbresponse = yield axios.get(`/api/leaderboardGame/${action.payload}`)
         yield put ({type: 'SET_GAME_ID', payload: action.payload})
-        yield put ({type: 'SET_LEADERBOARD'})
+        yield put ({type: 'SET_GAME_LEADERBOARD', payload: gamelbresponse.data})
     }catch(error) {
         console.log('fetchLeaderboardGame error: ', error);
     }
 }
 
-function * leaderboardSaga() {
+function * leaderboardgameSaga() {
     yield takeLatest('FETCH_LEADERBOARD_GAME', fetchLeaderboardGame)
 }
-export default leaderboardSaga;
+export default leaderboardgameSaga;
