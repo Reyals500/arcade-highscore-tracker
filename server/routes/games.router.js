@@ -11,6 +11,7 @@ router.get('/', rejectUnauthenticated , (req, res) => {
     console.log('/games GET route');
     console.log('is authenticated?', req.isAuthenticated());
     console.log('user', req.user);
+    //Getting all the data from the Game Table
     let queryText = `SELECT * FROM "Game_table"`
     pool.query(queryText).then((result) => {
         res.send(result.rows);
