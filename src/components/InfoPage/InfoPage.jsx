@@ -33,7 +33,6 @@ function InfoPage() {
             <div key={game.id}>
               <h2>{game.name}</h2>
               <img onClick={handleClick} id={game.id} src={game.img_url}></img>
-              <p>{game.overview_text}</p>
             </div>
           )
         })}

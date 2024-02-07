@@ -10,6 +10,7 @@ function SingleGamePage() {
         <div>
         <h3>{gameLeaderboard[0].name}</h3>
         <img src={gameLeaderboard[0].img_url}/>
+        <h5>{gameLeaderboard[0].overview_text}</h5>
         
         <div>
             {gameLeaderboard?.map(score => {
@@ -17,7 +18,6 @@ function SingleGamePage() {
                     <div key={score.id}>
                     <h3>{score.username}: {score.scores}</h3>
                     <h5>Time: {score.time} Date:{score.date} </h5>
-                    
                     </div>
                     
                 )
