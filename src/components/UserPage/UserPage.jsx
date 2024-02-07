@@ -19,7 +19,7 @@ function UserPage() {
       <div>
         {leaderboard.map(leader => {
           return (
-            <div>
+            <div key={leader.id}>
               <h4>{leader.name}: {leader.scores}</h4>
             </div>
           )

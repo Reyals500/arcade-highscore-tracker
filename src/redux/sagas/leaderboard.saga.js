@@ -3,7 +3,7 @@ import { put, takeLatest, takeEvery } from 'redux-saga/effects';
 
 function * fetchLeaderboard() {
     try{
-        const leaderboardResponse = yield axios.get('/api/leaderboard')
+        const leaderboardResponse = yield axios.get(`/api/leaderboard/`)
         yield put ({type: 'SET_LEADERBOARD', payload: leaderboardResponse.data})
     }catch(error) {
         console.log('fetchLeaderboard error: ', error);

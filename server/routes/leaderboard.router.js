@@ -19,12 +19,13 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     GROUP BY "Game_table".name, "Leaderboard".scores, "Leaderboard".date, "Leaderboard".time
     ORDER BY "Game_table".name ASC;
     `
-    let queryParams = req.user.id
-    pool.query(queryText, [queryParams]).then((result) => {
+    let queryParams = [req.user.id]
+    pool.query(queryText, queryParams).then((result) => {
         res.send(result.rows);
     }).catch((error) => {
         console.log('Error in leaderboard GET',error);
         res.sendStatus(500)
     })
 })
+
 module.exports = router;
