@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 function SingleGamePage() {
     // const leaderboard = useSelector((store) => store.leaderboardReducer)
     const gameLeaderboard = useSelector((store) => store.gameleaderboardReducer)
+
     return (
         <div>
         <h3>{gameLeaderboard[0].name}</h3>
