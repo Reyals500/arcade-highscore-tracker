@@ -5,6 +5,7 @@ import userSaga from './user.saga';
 import gameSaga from './game.saga';
 import leaderboardSaga from './leaderboard.saga';
 import leaderboardgameSaga from './leaderboardgame.saga';
+import newScoreSaga from './newScore.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     gameSaga(),
     leaderboardSaga(),
     leaderboardgameSaga(),
+    newScoreSaga(),
   ]);
 }
