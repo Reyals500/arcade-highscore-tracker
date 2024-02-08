@@ -44,7 +44,9 @@ router.post('/', rejectUnauthenticated, (req, res) => {
         newScore.time
     ];
     pool.query(queryText, queryValues)
-    .then((result) => {res.sendStatus(201); })
+    .then((result) => {
+        const gameID = result.rows[0].game_id
+        res.status(201).json({gameID}); })
     .catch((error) => {
         console.log("Error in POST /api/leaderboardGame", error);
         res.sendStatus(500)

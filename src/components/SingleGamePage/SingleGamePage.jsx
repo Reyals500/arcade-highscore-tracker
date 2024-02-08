@@ -6,6 +6,7 @@ function SingleGamePage() {
     // const leaderboard = useSelector((store) => store.leaderboardReducer)
     const gameLeaderboard = useSelector((store) => store.gameleaderboardReducer)
     const leaderboardgame = useSelector((store) => store.leaderboardgameReducer)
+    const games = useSelector((store) => store.gameReducer)
     const [newScore, setNewScore] = useState({game_id: '', scores: '', date: '', time: '' })
 
     const dispatch = useDispatch();
@@ -39,12 +40,15 @@ function SingleGamePage() {
         dispatch({type: 'ADD_SCORE', payload})
         setNewScore({game_id: '', scores: '', date: '', time: '' })
     }
+    // useEffect(() => {
+    //     dispatch({ type: 'FETCH_LEADERBOARD_GAME', payload: leaderboardgame})
+    // }, [])
 
     return (
         <div>
-        <h3>{gameLeaderboard[0].name}</h3>
-        <img src={gameLeaderboard[0].img_url}/>
-        <h5>{gameLeaderboard[0].overview_text}</h5>
+        <h3>{gameLeaderboard[0]?.name}</h3>
+        <img src={gameLeaderboard[0]?.img_url}/>
+        <h5>{gameLeaderboard[0]?.overview_text}</h5>
         
         <div>
             {gameLeaderboard?.map(score => {
