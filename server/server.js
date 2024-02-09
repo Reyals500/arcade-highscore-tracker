@@ -9,6 +9,9 @@ const passport = require('./strategies/user.strategy');
 
 // Route Includes
 const userRouter = require('./routes/user.router');
+const gamesRouter = require('./routes/games.router')
+const leaderboardRouter = require('./routes/leaderboard.router')
+const leaderboardGameRouter = require('./routes/leaderboardgame.router')
 
 // Express Middleware
 app.use(express.json());
@@ -24,6 +27,9 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/user', userRouter);
+app.use('/api/games', gamesRouter);
+app.use('/api/leaderboard', leaderboardRouter)
+app.use('/api/leaderboardGame', leaderboardGameRouter)
 
 // Listen Server & Port
 app.listen(PORT, () => {
