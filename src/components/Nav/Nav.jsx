@@ -35,6 +35,9 @@ function Nav() {
             <Link className="navLink" to="/singleGame">
               Single Game Page
             </Link>
+            <Link className="navLink" to="/editScore">
+              Edit Score
+            </Link>
 
             <LogOutButton className="navLink" />
           </>

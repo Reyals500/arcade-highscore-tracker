@@ -22,6 +22,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
 import SingleGamePage from '../SingleGamePage/SingleGamePage';
+import EditForm from '../EditScorePage/EditScorePage';
 
 function App() {
   const dispatch = useDispatch();
@@ -75,6 +76,13 @@ function App() {
             path ="/singleGame"
           >
             <SingleGamePage />
+          </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows EditScore else shows LoginPage
+            exact
+            path ="/editScore"
+          >
+            <EditForm />
           </ProtectedRoute>
 
           <Route
