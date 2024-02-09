@@ -40,6 +40,16 @@ function SingleGamePage() {
         dispatch({type: 'ADD_SCORE', payload})
         setNewScore({game_id: '', scores: '', date: '', time: '' })
     }
+    const deleteScore = (event) => {
+        console.log("Clicked the delete button!", event.target.id);
+        const payload = event.target.id
+        dispatch({type: 'DELETE_SCORE', payload})
+        dispatch({type: 'FETCH_LEADERBOARD_GAME', payload: leaderboardgame})
+
+    }   
+    const editScore = (event) => {
+        console.log("Clicked the edit button!", event.target.id);
+    }
     // useEffect(() => {
     //     dispatch({ type: 'FETCH_LEADERBOARD_GAME', payload: leaderboardgame})
     // }, [])
@@ -48,14 +58,16 @@ function SingleGamePage() {
         <div>
         <h3>{gameLeaderboard[0]?.name}</h3>
         <img src={gameLeaderboard[0]?.img_url}/>
-        <h5>{gameLeaderboard[0]?.overview_text}</h5>
+        <h4>{gameLeaderboard[0]?.overview_text}</h4>
         
-        <div>
+        <div key={gameLeaderboard.id}>
             {gameLeaderboard?.map(score => {
                 return(
-                    <div key={score.id}>
+                    <div >
                     <h3>{score.username}: {score.scores}</h3>
                     <h5>Time: {score.time} Date:{score.date} </h5>
+                    <button id={score.id} onClick={editScore}>Edit</button>
+                    <button id={score.id} onClick={deleteScore}>Delete</button>
                     </div>
                 )
             })}

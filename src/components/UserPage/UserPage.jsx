@@ -16,10 +16,10 @@ function UserPage() {
     <div className="container">
       <h2>Welcome, {user.username}!</h2>
       <p>Your ID is: {user.id}</p>
-      <div>
+      <div key={leaderboard.id}>
         {leaderboard.map(leader => {
           return (
-            <div key={leader.id}>
+            <div >
               <h4>{leader.name}: {leader.scores}</h4>
             </div>
           )
