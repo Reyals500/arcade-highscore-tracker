@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import EditForm from '../EditScorePage/EditScorePage';
 
 function SingleGamePage() {
     // const leaderboard = useSelector((store) => store.leaderboardReducer)
@@ -8,8 +13,9 @@ function SingleGamePage() {
     const leaderboardgame = useSelector((store) => store.leaderboardgameReducer)
     const games = useSelector((store) => store.gameReducer)
     const [newScore, setNewScore] = useState({game_id: '', scores: '', date: '', time: '' })
-
     const dispatch = useDispatch();
+    const history = useHistory();
+    
 
     const handleScoreChange = (event) => {
         setNewScore({
@@ -49,6 +55,9 @@ function SingleGamePage() {
     }   
     const editScore = (event) => {
         console.log("Clicked the edit button!", event.target.id);
+        const payload = event.target.id
+        dispatch({type: 'FETCH_UPDATE', payload})
+        history.push('/editScore')
     }
     // useEffect(() => {
     //     dispatch({ type: 'FETCH_LEADERBOARD_GAME', payload: leaderboardgame})
@@ -60,13 +69,13 @@ function SingleGamePage() {
         <img src={gameLeaderboard[0]?.img_url}/>
         <h4>{gameLeaderboard[0]?.overview_text}</h4>
         
-        <div key={gameLeaderboard.id}>
+        <div>
             {gameLeaderboard?.map(score => {
                 return(
-                    <div >
+                    <div>
                     <h3>{score.username}: {score.scores}</h3>
                     <h5>Time: {score.time} Date:{score.date} </h5>
-                    <button id={score.id} onClick={editScore}>Edit</button>
+                    <button id={score.id} onClick={(event) => editScore(event)}>Edit</button>
                     <button id={score.id} onClick={deleteScore}>Delete</button>
                     </div>
                 )

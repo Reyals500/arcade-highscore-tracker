@@ -27,6 +27,7 @@
   },
   "scripts": {
     "start": "node server/server.js | vite",
+    "dev-host": "vite --host",
     "client": "vite",
     "server": "nodemon --watch server server/server.js",
     "build": "vite build",

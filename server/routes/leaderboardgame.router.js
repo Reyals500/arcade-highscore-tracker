@@ -65,4 +65,18 @@ router.delete('/:id', (req, res) => {
         res.sendStatus(500);
       });
   });
+  router.put('/:id', (req, res) => {
+    // Update this single student
+    const idToUpdate = req.params.id;
+    const sqlText = `UPDATE "Leaderboard" SET scores = $1 WHERE id = $2`;
+
+    pool.query(sqlText, [req.body.scores, idToUpdate])
+        .then((result) => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log(`Error making database query ${sqlText}`, error);
+            res.sendStatus(500);
+        });
+});
 module.exports = router;
