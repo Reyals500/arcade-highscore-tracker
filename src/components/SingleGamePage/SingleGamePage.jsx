@@ -8,6 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Swal from 'sweetalert2'
 
 function SingleGamePage() {
     // const leaderboard = useSelector((store) => store.leaderboardReducer)
@@ -55,8 +56,42 @@ function SingleGamePage() {
     const deleteScore = (event) => {
         console.log("Clicked the delete button!", event.target.id);
         const payload = event.target.id
-        dispatch({type: 'DELETE_SCORE', payload})
-        dispatch({type: 'FETCH_LEADERBOARD_GAME', payload: leaderboardgame})
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: "btn btn-success",
+              cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+          });
+          swalWithBootstrapButtons.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true
+          }).then((result) => {
+            if (result.isConfirmed) {
+              swalWithBootstrapButtons.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
+              dispatch({type: 'DELETE_SCORE', payload})
+              dispatch({type: 'FETCH_LEADERBOARD_GAME', payload: leaderboardgame})
+            } else if (
+              /* Read more about handling dismissals below */
+              result.dismiss === Swal.DismissReason.cancel
+            ) {
+              swalWithBootstrapButtons.fire({
+                title: "Cancelled",
+                text: "Your imaginary file is safe :)",
+                icon: "error"
+              });
+            }
+          });
+
 
     }   
     const editScore = (event) => {
@@ -65,6 +100,7 @@ function SingleGamePage() {
         dispatch({type: 'FETCH_UPDATE', payload})
         history.push('/editScore')
     }
+    
     // useEffect(() => {
     //     dispatch({ type: 'FETCH_LEADERBOARD_GAME', payload: leaderboardgame})
     // }, [])
@@ -87,27 +123,6 @@ function SingleGamePage() {
                 )
             })}
         </div>
-        {/* <form onSubmit={(event) => addNewScore(event)}>
-            <input 
-            type="text" 
-            onChange={handleScoreChange}
-            placeholder='Score'
-            value={newScore.scores}
-            />
-            <input 
-            type="text"
-            onChange={handleDateChange}
-            placeholder='Date'
-            value={newScore.date}
-            />
-            <input 
-            type="text"
-            onChange={handleTimeChange}
-            placeholder='Time'
-            value={newScore.time}
-            />
-        <button type='submit'>POST NEW SCORE</button>
-        </form> */}
         <Button variant="outlined" onClick={handleClickOpen}>
         Add New Score
       </Button>
@@ -119,10 +134,7 @@ function SingleGamePage() {
           onSubmit: (event) => {
             event.preventDefault();
             addNewScore(event);
-            // const formData = new FormData(event.currentTarget);
-            // const formJson = Object.fromEntries(formData.entries());
-            // const email = formJson.email;
-            // console.log(email);
+ 
             handleClose();
           },
         }}
