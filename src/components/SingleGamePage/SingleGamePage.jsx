@@ -101,10 +101,9 @@ function SingleGamePage() {
         dispatch({type: 'FETCH_UPDATE', payload})
         history.push('/editScore')
     }
-    
-    // useEffect(() => {
-    //     dispatch({ type: 'FETCH_LEADERBOARD_GAME', payload: leaderboardgame})
-    // }, [])
+    const backPage = () => {
+        history.push('/info')
+    }    
 
     return (
         <div>
@@ -190,7 +189,8 @@ function SingleGamePage() {
           <Button onClick={handleClose}>Cancel</Button>
           <Button type="submit">Add Score</Button>
         </DialogActions>
-      </Dialog>
+        </Dialog>
+        <Button onClick={backPage}>Back</Button>
         </div>
     )
 }

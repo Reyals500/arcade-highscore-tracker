@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import Stack from '@mui/joy/Stack';
 import Autocomplete from '@mui/joy/Autocomplete';
 
 // This is one of our simplest components
