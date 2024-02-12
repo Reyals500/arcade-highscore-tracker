@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import EditForm from '../EditScorePage/EditScorePage';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 function SingleGamePage() {
     // const leaderboard = useSelector((store) => store.leaderboardReducer)
@@ -15,6 +17,10 @@ function SingleGamePage() {
     const [newScore, setNewScore] = useState({game_id: '', scores: '', date: '', time: '' })
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const [open, setOpen] = useState(false);
+    const handleClickOpen = () => {setOpen(true);};
+    const handleClose = () => {setOpen(false);};
     
 
     const handleScoreChange = (event) => {
@@ -81,7 +87,7 @@ function SingleGamePage() {
                 )
             })}
         </div>
-        <form onSubmit={(event) => addNewScore(event)}>
+        {/* <form onSubmit={(event) => addNewScore(event)}>
             <input 
             type="text" 
             onChange={handleScoreChange}
@@ -101,8 +107,76 @@ function SingleGamePage() {
             value={newScore.time}
             />
         <button type='submit'>POST NEW SCORE</button>
-        </form>
-        
+        </form> */}
+        <Button variant="outlined" onClick={handleClickOpen}>
+        Add New Score
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          component: 'form',
+          onSubmit: (event) => {
+            event.preventDefault();
+            addNewScore(event);
+            // const formData = new FormData(event.currentTarget);
+            // const formJson = Object.fromEntries(formData.entries());
+            // const email = formJson.email;
+            // console.log(email);
+            handleClose();
+          },
+        }}
+      >
+        <DialogTitle>Add Score</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Time to add in that awesome new score, or if you don't want to you can click the cancel button.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="score"
+            label="Score"
+            type="number"
+            onChange={handleScoreChange}
+            value={newScore.scores}
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="date"
+            label="Date"
+            type="date"
+            onChange={handleDateChange}
+            value={newScore.date}
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="time"
+            label="Time"
+            type="time"
+            onChange={handleTimeChange}
+            value={newScore.time}
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button type="submit">Add Score</Button>
+        </DialogActions>
+      </Dialog>
         </div>
     )
 }
