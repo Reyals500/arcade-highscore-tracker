@@ -24,6 +24,7 @@ import './App.css';
 import SingleGamePage from '../SingleGamePage/SingleGamePage';
 import EditForm from '../EditScorePage/EditScorePage';
 
+
 function App() {
   const dispatch = useDispatch();
 

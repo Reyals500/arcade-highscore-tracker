@@ -169,6 +169,7 @@ function SingleGamePage() {
             value={newScore.date}
             fullWidth
             variant="standard"
+            InputLabelProps={{ shrink: true }}
           />
           <TextField
             autoFocus
@@ -182,6 +183,7 @@ function SingleGamePage() {
             value={newScore.time}
             fullWidth
             variant="standard"
+            InputLabelProps={{ shrink: true }}
           />
         </DialogContent>
         <DialogActions>
