@@ -10,6 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Swal from 'sweetalert2'
 
+
 function SingleGamePage() {
     // const leaderboard = useSelector((store) => store.leaderboardReducer)
     const gameLeaderboard = useSelector((store) => store.gameleaderboardReducer)
@@ -134,7 +135,6 @@ function SingleGamePage() {
           onSubmit: (event) => {
             event.preventDefault();
             addNewScore(event);
- 
             handleClose();
           },
         }}

@@ -19,8 +19,9 @@ function LandingPage() {
 
       <div className="grid">
         <div className="grid-col grid-col_8">
+          <h3>Retro Arcade High Score Tracking App</h3>
           <p>
-           Hello and welcome to the Arcade High
+          The Retro Arcade High Score Tracking App is a web application designed to track and display high scores for various classic arcade games. It allows users to compete for the top spot on the leaderboards and keep track of their progress over time.
           </p>
         </div>
         <div className="grid-col grid-col_4">
