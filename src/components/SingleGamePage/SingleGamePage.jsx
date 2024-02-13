@@ -9,6 +9,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Swal from 'sweetalert2'
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 
 function SingleGamePage() {
@@ -87,7 +94,7 @@ function SingleGamePage() {
             ) {
               swalWithBootstrapButtons.fire({
                 title: "Cancelled",
-                text: "Your imaginary file is safe :)",
+                text: "Your score is safe :)",
                 icon: "error"
               });
             }
@@ -110,19 +117,36 @@ function SingleGamePage() {
         <h3>{gameLeaderboard[0]?.name}</h3>
         <img src={gameLeaderboard[0]?.img_url}/>
         <h4>{gameLeaderboard[0]?.overview_text}</h4>
-        
-        <div>
-            {gameLeaderboard?.map(score => {
-                return(
-                    <div>
-                    <h3>{score.username}: {score.scores}</h3>
-                    <h5>Time: {score.time} Date:{score.date} </h5>
-                    <button id={score.id} onClick={(event) => editScore(event)}>Edit</button>
+        <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Username</TableCell>
+            <TableCell align="right">Score</TableCell>
+            <TableCell align="right">Time</TableCell>
+            <TableCell align="right">Date</TableCell>
+
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {gameLeaderboard?.map((score) => (
+            <TableRow
+              key={score.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {score.username}
+              </TableCell>
+              <TableCell align="right">{score.scores}</TableCell>
+              <TableCell align="right">{score.time}</TableCell>
+              <TableCell align="right">{score.date}</TableCell>
+              <button id={score.id} onClick={(event) => editScore(event)}>Edit</button>
                     <button id={score.id} onClick={deleteScore}>Delete</button>
-                    </div>
-                )
-            })}
-        </div>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
         <Button variant="outlined" onClick={handleClickOpen}>
         Add New Score
       </Button>
@@ -190,7 +214,7 @@ function SingleGamePage() {
           <Button type="submit">Add Score</Button>
         </DialogActions>
         </Dialog>
-        <Button onClick={backPage}>Back</Button>
+        <Button variant="outlined" onClick={backPage}>Back</Button>
         </div>
     )
 }
