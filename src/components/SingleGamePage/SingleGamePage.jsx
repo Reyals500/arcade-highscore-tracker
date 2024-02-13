@@ -16,6 +16,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { DateTime } from "luxon"
 
 
 function SingleGamePage() {
@@ -110,7 +111,8 @@ function SingleGamePage() {
     }
     const backPage = () => {
         history.push('/info')
-    }    
+    } 
+    // const dt = DateTime.fromISO(gameLeaderboard.date)
 
     return (
         <div>
@@ -118,14 +120,15 @@ function SingleGamePage() {
         <img src={gameLeaderboard[0]?.img_url}/>
         <h4>{gameLeaderboard[0]?.overview_text}</h4>
         <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 550, bgcolor: '#d703d0'}} aria-label="simple table">
         <TableHead>
-          <TableRow>
-            <TableCell>Username</TableCell>
-            <TableCell align="right">Score</TableCell>
-            <TableCell align="right">Time</TableCell>
-            <TableCell align="right">Date</TableCell>
-
+          <TableRow >
+            <TableCell sx={{color: 'white'}}>Username</TableCell>
+            <TableCell align="right" sx={{color: 'white'}}>Score</TableCell>
+            <TableCell align="right" sx={{color: 'white'}}>Time</TableCell>
+            <TableCell align="right" sx={{color: 'white'}}>Date</TableCell>
+            <TableCell align="right" sx={{color: 'white'}}>Edit</TableCell>
+            <TableCell align="right" sx={{color: 'white'}}>Delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -138,10 +141,10 @@ function SingleGamePage() {
                 {score.username}
               </TableCell>
               <TableCell align="right">{score.scores}</TableCell>
-              <TableCell align="right">{score.time}</TableCell>
-              <TableCell align="right">{score.date}</TableCell>
-              <button id={score.id} onClick={(event) => editScore(event)}>Edit</button>
-                    <button id={score.id} onClick={deleteScore}>Delete</button>
+              <TableCell align="right">{score.time && DateTime.fromISO(score.time).toFormat('hh:mm a')}</TableCell>
+              <TableCell align="right">{score.date && DateTime.fromISO(score.date).toFormat('LLL dd yyyy')}</TableCell>
+              <TableCell align='right'><Button id={score.id} onClick={(event) => editScore(event)} sx={{color: 'white'}}>Edit</Button></TableCell>
+              <TableCell  align='right'><Button id={score.id} onClick={deleteScore} sx={{color: 'white'}}>Delete</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

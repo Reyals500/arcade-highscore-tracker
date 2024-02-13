@@ -29,7 +29,7 @@ function Nav() {
         {user.id && (
           <>
           <Dropdown>
-          <MenuButton>Dashboard</MenuButton>
+          <MenuButton sx={{color: 'white'}}>Dashboard</MenuButton>
           <Menu>
             <MenuItem>
             <Link className="navLink" to="/user">

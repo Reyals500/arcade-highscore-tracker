@@ -18,6 +18,7 @@ function AboutPage() {
           <li>Material UI</li>
           <li>Material Joy UI</li>
           <li>Sweet Alerts</li>
+          <li>Luxon</li>
         </ul>
       </div>
     </div>
