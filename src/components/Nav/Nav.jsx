@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import { useSelector } from 'react-redux';
+import Dropdown from '@mui/joy/Dropdown';
+import Menu from '@mui/joy/Menu';
+import MenuButton from '@mui/joy/MenuButton';
+import MenuItem from '@mui/joy/MenuItem';
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -24,22 +28,34 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
+          <Dropdown>
+          <MenuButton sx={{color: 'white'}}>Dashboard</MenuButton>
+          <Menu>
+            <MenuItem>
             <Link className="navLink" to="/user">
               Home
             </Link>
-
+            </MenuItem>
+            <MenuItem>
             <Link className="navLink" to="/info">
               Info Page
             </Link>
-
+            </MenuItem>
+            <MenuItem>
             <Link className="navLink" to="/singleGame">
               Single Game Page
             </Link>
+            </MenuItem>
+            <MenuItem>
             <Link className="navLink" to="/editScore">
               Edit Score
             </Link>
-
+            </MenuItem>
+            <MenuItem>
             <LogOutButton className="navLink" />
+            </MenuItem>
+            </Menu>
+            </Dropdown>
           </>
         )}
 

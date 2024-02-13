@@ -27,5 +27,21 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         res.sendStatus(500)
     })
 })
+router.get('/:id', rejectUnauthenticated, (req, res) => {
+    let queryText = `
+    SELECT "Leaderboard".id, "Leaderboard".scores, "Leaderboard".date, "Leaderboard".time, "user".username FROM "Leaderboard"
+    JOIN "user" ON "user".id = "Leaderboard".user_id
+    WHERE "Leaderboard".id = $1
+    GROUP BY "Leaderboard".id ,"Leaderboard".scores, "Leaderboard".date, "Leaderboard".time, "user".username
+    `
 
+    let queryParams = [req.params.id]
+    pool.query(queryText, queryParams).then((result) => {
+        res.send(result.rows);
+    }).catch((error) => {
+        console.log('Error in leaderboard GET',error);
+        res.sendStatus(500)
+    })
+
+})
 module.exports = router;

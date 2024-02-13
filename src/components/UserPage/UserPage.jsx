@@ -14,6 +14,7 @@ function UserPage() {
   }, [])
   return (
     <div className="container">
+      <img src='/documentation/images/Arcade_Emporium.jpeg'></img>
       <h2>Welcome, {user.username}!</h2>
       <p>Your ID is: {user.id}</p>
       <div key={leaderboard.id}>

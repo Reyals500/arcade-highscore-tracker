@@ -5,6 +5,7 @@ import gameReducer from './game.reducer';
 import leaderboardReducer from './leaderboard.reducer';
 import leaderboardgameReducer from './leaderboardgame.reducer';
 import gameleaderboardReducer from './gameleaderboard.reducer';
+import editReducer from './edit.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   leaderboardReducer,
   leaderboardgameReducer,
   gameleaderboardReducer,
+  editReducer,
 });
 
 export default rootReducer;

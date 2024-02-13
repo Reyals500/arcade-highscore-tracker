@@ -1,6 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Swal from 'sweetalert2'
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { DateTime } from "luxon"
+
 
 function SingleGamePage() {
     // const leaderboard = useSelector((store) => store.leaderboardReducer)
@@ -8,8 +25,13 @@ function SingleGamePage() {
     const leaderboardgame = useSelector((store) => store.leaderboardgameReducer)
     const games = useSelector((store) => store.gameReducer)
     const [newScore, setNewScore] = useState({game_id: '', scores: '', date: '', time: '' })
-
     const dispatch = useDispatch();
+    const history = useHistory();
+
+    const [open, setOpen] = useState(false);
+    const handleClickOpen = () => {setOpen(true);};
+    const handleClose = () => {setOpen(false);};
+    
 
     const handleScoreChange = (event) => {
         setNewScore({
@@ -43,57 +65,159 @@ function SingleGamePage() {
     const deleteScore = (event) => {
         console.log("Clicked the delete button!", event.target.id);
         const payload = event.target.id
-        dispatch({type: 'DELETE_SCORE', payload})
-        dispatch({type: 'FETCH_LEADERBOARD_GAME', payload: leaderboardgame})
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: "btn btn-success",
+              cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+          });
+          swalWithBootstrapButtons.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true
+          }).then((result) => {
+            if (result.isConfirmed) {
+              swalWithBootstrapButtons.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
+              dispatch({type: 'DELETE_SCORE', payload})
+              dispatch({type: 'FETCH_LEADERBOARD_GAME', payload: leaderboardgame})
+            } else if (
+              /* Read more about handling dismissals below */
+              result.dismiss === Swal.DismissReason.cancel
+            ) {
+              swalWithBootstrapButtons.fire({
+                title: "Cancelled",
+                text: "Your score is safe :)",
+                icon: "error"
+              });
+            }
+          });
+
 
     }   
     const editScore = (event) => {
         console.log("Clicked the edit button!", event.target.id);
+        const payload = event.target.id
+        dispatch({type: 'FETCH_UPDATE', payload})
+        history.push('/editScore')
     }
-    // useEffect(() => {
-    //     dispatch({ type: 'FETCH_LEADERBOARD_GAME', payload: leaderboardgame})
-    // }, [])
+    const backPage = () => {
+        history.push('/info')
+    } 
+    // const dt = DateTime.fromISO(gameLeaderboard.date)
 
     return (
         <div>
         <h3>{gameLeaderboard[0]?.name}</h3>
         <img src={gameLeaderboard[0]?.img_url}/>
         <h4>{gameLeaderboard[0]?.overview_text}</h4>
-        
-        <div key={gameLeaderboard.id}>
-            {gameLeaderboard?.map(score => {
-                return(
-                    <div >
-                    <h3>{score.username}: {score.scores}</h3>
-                    <h5>Time: {score.time} Date:{score.date} </h5>
-                    <button id={score.id} onClick={editScore}>Edit</button>
-                    <button id={score.id} onClick={deleteScore}>Delete</button>
-                    </div>
-                )
-            })}
-        </div>
-        <form onSubmit={(event) => addNewScore(event)}>
-            <input 
-            type="text" 
+        <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 550, bgcolor: '#d703d0'}} aria-label="simple table">
+        <TableHead>
+          <TableRow >
+            <TableCell sx={{color: 'white'}}>Username</TableCell>
+            <TableCell align="right" sx={{color: 'white'}}>Score</TableCell>
+            <TableCell align="right" sx={{color: 'white'}}>Time</TableCell>
+            <TableCell align="right" sx={{color: 'white'}}>Date</TableCell>
+            <TableCell align="right" sx={{color: 'white'}}>Edit</TableCell>
+            <TableCell align="right" sx={{color: 'white'}}>Delete</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {gameLeaderboard?.map((score) => (
+            <TableRow
+              key={score.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {score.username}
+              </TableCell>
+              <TableCell align="right">{score.scores}</TableCell>
+              <TableCell align="right">{score.time && DateTime.fromISO(score.time).toFormat('hh:mm a')}</TableCell>
+              <TableCell align="right">{score.date && DateTime.fromISO(score.date).toFormat('LLL dd yyyy')}</TableCell>
+              <TableCell align='right'><Button id={score.id} onClick={(event) => editScore(event)} sx={{color: 'white'}}>Edit</Button></TableCell>
+              <TableCell  align='right'><Button id={score.id} onClick={deleteScore} sx={{color: 'white'}}>Delete</Button></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+        <Button variant="outlined" onClick={handleClickOpen}>
+        Add New Score
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          component: 'form',
+          onSubmit: (event) => {
+            event.preventDefault();
+            addNewScore(event);
+            handleClose();
+          },
+        }}
+      >
+        <DialogTitle>Add Score</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Time to add in that awesome new score, or if you don't want to you can click the cancel button.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="score"
+            label="Score"
+            type="number"
             onChange={handleScoreChange}
-            placeholder='Score'
             value={newScore.scores}
-            />
-            <input 
-            type="text"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="date"
+            label="Date"
+            type="date"
             onChange={handleDateChange}
-            placeholder='Date'
             value={newScore.date}
-            />
-            <input 
-            type="text"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="time"
+            label="Time"
+            type="time"
             onChange={handleTimeChange}
-            placeholder='Time'
             value={newScore.time}
-            />
-        <button type='submit'>POST NEW SCORE</button>
-        </form>
-        
+            fullWidth
+            variant="standard"
+            InputLabelProps={{ shrink: true }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button type="submit">Add Score</Button>
+        </DialogActions>
+        </Dialog>
+        <Button variant="outlined" onClick={backPage}>Back</Button>
         </div>
     )
 }
