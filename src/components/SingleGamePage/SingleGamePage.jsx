@@ -112,6 +112,7 @@ function SingleGamePage() {
     const backPage = () => {
         history.push('/info')
     } 
+
     // const dt = DateTime.fromISO(gameLeaderboard.date)
 
     return (
@@ -123,12 +124,12 @@ function SingleGamePage() {
       <Table sx={{ minWidth: 550, bgcolor: '#d703d0'}} aria-label="simple table">
         <TableHead>
           <TableRow >
-            <TableCell sx={{color: 'white'}}>Username</TableCell>
-            <TableCell align="right" sx={{color: 'white'}}>Score</TableCell>
-            <TableCell align="right" sx={{color: 'white'}}>Time</TableCell>
-            <TableCell align="right" sx={{color: 'white'}}>Date</TableCell>
-            <TableCell align="right" sx={{color: 'white'}}>Edit</TableCell>
-            <TableCell align="right" sx={{color: 'white'}}>Delete</TableCell>
+            <TableCell sx={{color: 'white', fontSize: 'h6.fontSize'}}>Username</TableCell>
+            <TableCell align="right" sx={{color: 'white', fontSize: 'h6.fontSize'}}>Score</TableCell>
+            <TableCell align="right" sx={{color: 'white', fontSize: 'h6.fontSize'}}>Time</TableCell>
+            <TableCell align="right" sx={{color: 'white', fontSize: 'h6.fontSize'}}>Date</TableCell>
+            <TableCell align="right" sx={{color: 'white', fontSize: 'h6.fontSize'}}>Edit</TableCell>
+            <TableCell align="right" sx={{color: 'white', fontSize: 'h6.fontSize'}}>Delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -137,12 +138,12 @@ function SingleGamePage() {
               key={score.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell sx={{color: 'white'}} component="th" scope="row">
                 {score.username}
               </TableCell>
-              <TableCell align="right">{score.scores}</TableCell>
-              <TableCell align="right">{score.time && DateTime.fromISO(score.time).toFormat('hh:mm a')}</TableCell>
-              <TableCell align="right">{score.date && DateTime.fromISO(score.date).toFormat('LLL dd yyyy')}</TableCell>
+              <TableCell sx={{color: 'white'}} align="right">{score.scores}</TableCell>
+              <TableCell sx={{color: 'white'}} align="right">{score.time && DateTime.fromISO(score.time).toFormat('hh:mm a')}</TableCell>
+              <TableCell sx={{color: 'white'}} align="right">{score.date && DateTime.fromISO(score.date).toFormat('LLL dd yyyy')}</TableCell>
               <TableCell align='right'><Button id={score.id} onClick={(event) => editScore(event)} sx={{color: 'white'}}>Edit</Button></TableCell>
               <TableCell  align='right'><Button id={score.id} onClick={deleteScore} sx={{color: 'white'}}>Delete</Button></TableCell>
             </TableRow>

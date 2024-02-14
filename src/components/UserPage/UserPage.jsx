@@ -2,6 +2,7 @@ import React from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import {useSelector, useDispatch} from 'react-redux';
 import { useEffect } from 'react';
+import './UserPage.css';
 
 function UserPage() {
   const dispatch = useDispatch()
@@ -14,8 +15,8 @@ function UserPage() {
   }, [])
   return (
     <div className="container">
+    <h2>Welcome, {user.username}!</h2>
       <img src='/documentation/images/Arcade_Emporium.jpeg'></img>
-      <h2>Welcome, {user.username}!</h2>
       <p>Your ID is: {user.id}</p>
       <div key={leaderboard.id}>
         {leaderboard.map(leader => {
@@ -26,7 +27,7 @@ function UserPage() {
           )
         })}
       </div>
-      <LogOutButton className="btn" />
+      <LogOutButton className="btn1" />
     </div>
   );
 }
