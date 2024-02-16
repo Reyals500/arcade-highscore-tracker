@@ -20,7 +20,7 @@ function InfoPage() {
   const handleClick = (event) => {
     console.log("handleClick has been clicked", event.target.id);
     dispatch({type: 'FETCH_LEADERBOARD_GAME', payload: event.target.id})
-    history.push('/singleGame')
+    history.push('/singleGame/')
   }
   useEffect(() => {
     dispatch({type: 'FETCH_GAMES'})

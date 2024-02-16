@@ -37,8 +37,8 @@ function Nav() {
           <>
           <Dropdown>
           <MenuButton sx={{color: 'white'}}><MenuIcon/></MenuButton>
-          <Menu>
-            <MenuItem>
+          <Menu sx={{bgcolor: '#d703d0'}}>
+            <MenuItem >
             <Link className="navLink" to="/user">
               Home
             </Link>
@@ -70,8 +70,6 @@ function Nav() {
             </Dropdown>
           </>
         )}
-
-
       </div>
     </div>
   );
