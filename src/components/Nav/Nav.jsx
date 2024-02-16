@@ -7,6 +7,8 @@ import Dropdown from '@mui/joy/Dropdown';
 import Menu from '@mui/joy/Menu';
 import MenuButton from '@mui/joy/MenuButton';
 import MenuItem from '@mui/joy/MenuItem';
+import MenuIcon from '@mui/icons-material/Menu';
+
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -20,18 +22,23 @@ function Nav() {
         {/* If no user is logged in, show these links */}
         {!user.id && (
           // If there's no user, show login/registration links
+          <div>
           <Link className="navLink" to="/login">
             Login / Register
           </Link>
+          <Link className="navLink" to="/about">
+          About
+          </Link>
+          </div>
         )}
 
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
           <Dropdown>
-          <MenuButton sx={{color: 'white'}}>Dashboard</MenuButton>
-          <Menu>
-            <MenuItem>
+          <MenuButton sx={{color: 'white'}}><MenuIcon/></MenuButton>
+          <Menu sx={{bgcolor: '#d703d0'}}>
+            <MenuItem >
             <Link className="navLink" to="/user">
               Home
             </Link>
@@ -52,16 +59,17 @@ function Nav() {
             </Link>
             </MenuItem>
             <MenuItem>
+            <Link className="navLink" to="/about">
+            About
+            </Link>
+            </MenuItem>
+            <MenuItem>
             <LogOutButton className="navLink" />
             </MenuItem>
             </Menu>
             </Dropdown>
           </>
         )}
-
-        <Link className="navLink" to="/about">
-          About
-        </Link>
       </div>
     </div>
   );

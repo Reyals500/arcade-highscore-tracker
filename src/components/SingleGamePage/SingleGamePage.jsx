@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -24,6 +24,7 @@ function SingleGamePage() {
     const gameLeaderboard = useSelector((store) => store.gameleaderboardReducer)
     const leaderboardgame = useSelector((store) => store.leaderboardgameReducer)
     const games = useSelector((store) => store.gameReducer)
+    const user = useSelector((store) => store.user);
     const [newScore, setNewScore] = useState({game_id: '', scores: '', date: '', time: '' })
     const dispatch = useDispatch();
     const history = useHistory();
@@ -62,6 +63,7 @@ function SingleGamePage() {
         dispatch({type: 'ADD_SCORE', payload})
         setNewScore({game_id: '', scores: '', date: '', time: '' })
     }
+
     const deleteScore = (event) => {
         console.log("Clicked the delete button!", event.target.id);
         const payload = event.target.id
@@ -112,7 +114,19 @@ function SingleGamePage() {
     const backPage = () => {
         history.push('/info')
     } 
-    // const dt = DateTime.fromISO(gameLeaderboard.date)
+
+
+    // const ShowBtn = ({score}) => {
+    //     if(user.username === leaderboardgame.username){
+    //         return(
+    //         <>
+    //         <TableCell align='right'><Button id={score.id} onClick={(event) => editScore(event)} sx={{color: 'white'}}>Edit</Button></TableCell>
+    //         <TableCell  align='right'><Button id={score.id} onClick={deleteScore} sx={{color: 'white'}}>Delete</Button></TableCell>
+    //         </>
+    //         );
+    //     }else{return null}
+        
+    // }
 
     return (
         <div>
@@ -120,15 +134,15 @@ function SingleGamePage() {
         <img src={gameLeaderboard[0]?.img_url}/>
         <h4>{gameLeaderboard[0]?.overview_text}</h4>
         <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 550, bgcolor: '#d703d0'}} aria-label="simple table">
+      <Table sx={{ minWidth: 100, bgcolor: '#d703d0'}} aria-label="simple table">
         <TableHead>
           <TableRow >
-            <TableCell sx={{color: 'white'}}>Username</TableCell>
-            <TableCell align="right" sx={{color: 'white'}}>Score</TableCell>
-            <TableCell align="right" sx={{color: 'white'}}>Time</TableCell>
-            <TableCell align="right" sx={{color: 'white'}}>Date</TableCell>
-            <TableCell align="right" sx={{color: 'white'}}>Edit</TableCell>
-            <TableCell align="right" sx={{color: 'white'}}>Delete</TableCell>
+            <TableCell sx={{color: 'white', fontSize: 'h6.fontSize'}}>Name</TableCell>
+            <TableCell align="right" sx={{color: 'white', fontSize: 'h6.fontSize'}}>Score</TableCell>
+            <TableCell align="right" sx={{color: 'white', fontSize: 'h6.fontSize'}}>Time</TableCell>
+            <TableCell align="right" sx={{color: 'white', fontSize: 'h6.fontSize'}}>Date</TableCell>
+            <TableCell align="right" sx={{color: 'white', fontSize: 'h6.fontSize'}}>Edit</TableCell>
+            <TableCell align="right" sx={{color: 'white', fontSize: 'h6.fontSize'}}>Delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -137,12 +151,13 @@ function SingleGamePage() {
               key={score.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell sx={{color: 'white'}} component="th" scope="row">
                 {score.username}
               </TableCell>
-              <TableCell align="right">{score.scores}</TableCell>
-              <TableCell align="right">{score.time && DateTime.fromISO(score.time).toFormat('hh:mm a')}</TableCell>
-              <TableCell align="right">{score.date && DateTime.fromISO(score.date).toFormat('LLL dd yyyy')}</TableCell>
+              <TableCell sx={{color: 'white'}} align="right">{score.scores}</TableCell>
+              <TableCell sx={{color: 'white'}} align="right">{score.time && DateTime.fromISO(score.time).toFormat('hh:mm a')}</TableCell>
+              <TableCell sx={{color: 'white'}} align="right">{score.date && DateTime.fromISO(score.date).toFormat('LLL dd yyyy')}</TableCell>
+            {/* <ShowBtn score={score}/> */}
               <TableCell align='right'><Button id={score.id} onClick={(event) => editScore(event)} sx={{color: 'white'}}>Edit</Button></TableCell>
               <TableCell  align='right'><Button id={score.id} onClick={deleteScore} sx={{color: 'white'}}>Delete</Button></TableCell>
             </TableRow>
