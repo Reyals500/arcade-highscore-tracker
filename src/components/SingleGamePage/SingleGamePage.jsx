@@ -17,6 +17,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { DateTime } from "luxon"
+import './SingleGamePage.css'
 
 
 function SingleGamePage() {
@@ -134,7 +135,7 @@ function SingleGamePage() {
         <img src={gameLeaderboard[0]?.img_url}/>
         <h4>{gameLeaderboard[0]?.overview_text}</h4>
         <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 100, bgcolor: '#d703d0'}} aria-label="simple table">
+      <Table sx={{ minWidth: 100,  bgcolor: '#d703d0'}} aria-label="simple table">
         <TableHead>
           <TableRow >
             <TableCell sx={{color: 'white', fontSize: 'h6.fontSize'}}>Name</TableCell>

@@ -16,7 +16,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     JOIN "user" ON "user".id = "Leaderboard".user_id
     WHERE "Game_table".id = $1
     GROUP BY "Game_table".name, "Game_table".img_url, "Game_table".overview_text, "user".username, "Leaderboard".id	,"Leaderboard".scores, "Leaderboard".date, "Leaderboard".time
-    ORDER BY "user".username ASC;
+    ORDER BY "Leaderboard".scores DESC;
     `
     pool.query(queryText, [queryParams]).then((result) => {
         res.send(result.rows);
