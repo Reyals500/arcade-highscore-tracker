@@ -17,23 +17,24 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { DateTime } from "luxon"
+import './SingleGamePage.css'
 
 
 function SingleGamePage() {
-    // const leaderboard = useSelector((store) => store.leaderboardReducer)
     const gameLeaderboard = useSelector((store) => store.gameleaderboardReducer)
     const leaderboardgame = useSelector((store) => store.leaderboardgameReducer)
     const games = useSelector((store) => store.gameReducer)
     const user = useSelector((store) => store.user);
+    //this useState is going to be the payload for the add score dispatch
     const [newScore, setNewScore] = useState({game_id: '', scores: '', date: '', time: '' })
     const dispatch = useDispatch();
     const history = useHistory();
-
+    //this is setting up the dialog opening and closing
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => {setOpen(true);};
     const handleClose = () => {setOpen(false);};
     
-
+    //! All of these handleChnages are set up to sccept the change in an input and set them to the specific pert of the useState
     const handleScoreChange = (event) => {
         setNewScore({
             ...newScore,
@@ -63,7 +64,7 @@ function SingleGamePage() {
         dispatch({type: 'ADD_SCORE', payload})
         setNewScore({game_id: '', scores: '', date: '', time: '' })
     }
-
+    //! this is the deletescore function that also has sweet alert set up inside of it
     const deleteScore = (event) => {
         console.log("Clicked the delete button!", event.target.id);
         const payload = event.target.id
@@ -104,13 +105,15 @@ function SingleGamePage() {
           });
 
 
-    }   
+    }
+    // this is the edit score function sending us to the next page to edit the score   
     const editScore = (event) => {
         console.log("Clicked the edit button!", event.target.id);
         const payload = event.target.id
         dispatch({type: 'FETCH_UPDATE', payload})
         history.push('/editScore')
     }
+    //this function allows users to go back to the Games pages
     const backPage = () => {
         history.push('/info')
     } 
@@ -134,7 +137,7 @@ function SingleGamePage() {
         <img src={gameLeaderboard[0]?.img_url}/>
         <h4>{gameLeaderboard[0]?.overview_text}</h4>
         <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 100, bgcolor: '#d703d0'}} aria-label="simple table">
+      <Table sx={{ minWidth: 100,  bgcolor: '#d703d0'}} aria-label="simple table">
         <TableHead>
           <TableRow >
             <TableCell sx={{color: 'white', fontSize: 'h6.fontSize'}}>Name</TableCell>

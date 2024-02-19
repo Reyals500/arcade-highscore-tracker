@@ -12,7 +12,7 @@ function UserPage() {
   const user = useSelector((store) => store.user);
   //this is where the const leaderboard is going
   const leaderboard = useSelector((store) => store.leaderboardReducer)
-  
+  //this is the chart that appears underneath 
   const Chart = () => {
     const labels = leaderboard?.map(entry => entry.name);
     const dataPoints = leaderboard?.map(entry => entry.scores);
@@ -30,7 +30,7 @@ function UserPage() {
       data: data,
     };
     return (
-      <div style={{ height: "500px", width: "500px" }}>
+      <div style={{ height: "250px", width: "350px" }}>
       <Line data={data} options={config} />
     </div>
     )
@@ -54,7 +54,7 @@ function UserPage() {
         })}
       </div>
       <Chart />
-      <LogOutButton className="btn1" />
+      <LogOutButton className="btn" />
     </div>
   );
 }
