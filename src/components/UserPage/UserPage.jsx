@@ -12,7 +12,7 @@ function UserPage() {
   const user = useSelector((store) => store.user);
   //this is where the const leaderboard is going
   const leaderboard = useSelector((store) => store.leaderboardReducer)
-  
+  //this is the chart that appears underneath 
   const Chart = () => {
     const labels = leaderboard?.map(entry => entry.name);
     const dataPoints = leaderboard?.map(entry => entry.scores);

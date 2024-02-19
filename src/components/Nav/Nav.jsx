@@ -45,7 +45,7 @@ function Nav() {
             </MenuItem>
             <MenuItem>
             <Link className="navLink" to="/info">
-              Info Page
+              Games Page
             </Link>
             </MenuItem>
             <MenuItem>
