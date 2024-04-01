@@ -38,7 +38,7 @@ const EditForm = () => {
         // ! Axios put request to send over edited student info
         axios.put(
             `/api/leaderboardGame/${editScore[0].id}`,
-            editScore
+            formState
         ).then(response => {
             console.log("Success Sending Score Update")
             dispatch({type: 'EDIT_CLEAR'})
@@ -53,7 +53,7 @@ const EditForm = () => {
     return(
         <div>
         <h1>EDIT PAGE!!</h1>
-        <p>We are editing {editScore[0]?.username}, Score: {editScore[0]?.scores}, Date: {editScore[0]?.date}, Time: {editScore[0]?.time}</p>
+        <p>We are editing {editScore[0]?.id}, {editScore[0]?.username}, Score: {editScore[0]?.scores}, Date: {editScore[0]?.date}, Time: {editScore[0]?.time}</p>
         <form
             onSubmit={handleSubmit}
         >
