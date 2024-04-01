@@ -67,10 +67,22 @@ router.delete('/:id', (req, res) => {
   });
   router.put('/:id', (req, res) => {
     // Update this single student
-    const idToUpdate = req.params.id;
-    const sqlText = `UPDATE "Leaderboard" SET scores = $1 WHERE id = $2`;
+    
+    const sqlText = `
+    UPDATE "Leaderboard" 
+    SET scores = $1,
+    date = $2,
+    time = $3 
+    WHERE id = $4;
+    `
+    const queryParams = [
+        req.body.scores,
+        req.body.date,
+        req.body.time,
+        req.params.id
+      ]
 
-    pool.query(sqlText, [req.body.scores, idToUpdate])
+    pool.query(sqlText, queryParams)
         .then((result) => {
             res.sendStatus(200);
         })
